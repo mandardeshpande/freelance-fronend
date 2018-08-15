@@ -1,6 +1,7 @@
 import React from 'react';
 
 
+
 export default class Login extends React.Component{
 
     constructor(props){
@@ -10,9 +11,9 @@ export default class Login extends React.Component{
         this.handleOnClickOfSubmit = this.handleOnClickOfSubmit.bind(this);
 
         this.state ={
-            email:'mandar@gmail.com',
-            password:'password',
-            type:'buyer'
+            email:'',
+            password:'',
+            type:''
         }
     }
 
@@ -24,10 +25,9 @@ export default class Login extends React.Component{
     }
 
     handleOnClickOfSubmit(event) {
-        event.preventDefault();
+        console.log(this.state);
+        event.preventDefault()
         this.props.handleLogin(this.state);
-        localStorage.setItem("type",this.state.type);
-        localStorage.setItem("UserId","1");
     }
 
     render() {

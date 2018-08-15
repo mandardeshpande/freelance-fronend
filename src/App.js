@@ -3,6 +3,8 @@ import Login from './components/Login'
 import './styles/App.css';
 import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
+import getEnvConfig from './config/config';
+import { authBuyer, authSeller} from "./Service/AuthService";
 
 class App extends Component {
 
@@ -19,12 +21,34 @@ class App extends Component {
     }
 
 
+    componentDidMount(){
+        const host = getEnvConfig('local').host;
+        localStorage.setItem('host',host);
+    }
+
     handleLogin(data) {
-        if (data.email === 'mandar@gmail.com' && data.password === 'password') {
-            this.setState({
-                loginSuccess: true,
-                type:data.type,
-                showLogin:false
+        localStorage.setItem("type",data.type);
+        if(data.type === 'buyer'){
+            authBuyer(data.email, data.password).then((response)=>{
+                this.setState({
+                    loginSuccess: true,
+                    showLogin:false,
+                    type:data.type
+                });
+                localStorage.setItem("UserId",response.data.userId);
+            }).catch((err)=>{
+                console.error(err);
+            })
+        } else if( data.type === 'seller'){
+            authSeller(data.email, data.password).then((response)=>{
+                this.setState({
+                    loginSuccess: true,
+                    showLogin:false,
+                    type:data.type
+                });
+                localStorage.setItem("UserId",response.data.userId);
+            }).catch((err)=>{
+                console.error(err);
             })
         }
     }
