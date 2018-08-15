@@ -1,5 +1,4 @@
 import React from 'react';
-import {projectsPosted} from "../fixtures/projects_posted";
 import PlaceBidModal from '../Bid/PlaceBidModal';
 
 
@@ -11,7 +10,7 @@ export default class Project extends React.Component{
         super(props);
 
         this.state={
-            postedProjects: projectsPosted
+            postedProjects:this.props.projects
         }
     }
 

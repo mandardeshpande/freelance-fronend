@@ -5,6 +5,7 @@ import Content from '../genericComponents/Content';
 import ShowBids from "../Bid/ShowBids";
 import { winningBids }from '../fixtures/winningBids'
 import { bids }from '../fixtures/bids_user'
+import {getAllProjectPosted} from "../../Service/BuyerService";
 
 
 export default class BuyerDashBoard extends React.Component{
@@ -21,12 +22,18 @@ export default class BuyerDashBoard extends React.Component{
         ];
 
         this.state = {
-            activeTab: this.tabData[0]
+            activeTab: this.tabData[0],
+            isLoading:true
         }
     }
 
     componentDidMount(){
-        this.setState({bids,winningBids});
+
+        getAllProjectPosted().then((response)=>{
+            this.setState({postedProject:response.data,bids,winningBids,isLoading:false})
+        }).catch((err)=>{
+            console.error(err);
+        })
     }
 
     handleClick(tab) {
@@ -38,16 +45,20 @@ export default class BuyerDashBoard extends React.Component{
         const scene = this.tabData.filter(e=>e.name === this.state.activeTab.name)[0];
         let sceneWithProps = scene.scene;
 
+        if(scene.name === 'Home'){
+            sceneWithProps = <Project projects={this.state.postedProject}/>
+        }
 
         if(scene.name === 'Bids'){
             sceneWithProps = <ShowBids bids={this.state.bids}/>
         }
+
         if(scene.name === 'Bids Won'){
             sceneWithProps = <ShowBids bids={this.state.winningBids}/>
         }
 
 
-        return (<div className="card-body">
+        return (!this.state.isLoading && <div className="card-body">
             <Tabs tabsData={this.tabData} activeTab={this.state.activeTab} changeTab={this.handleClick} />
             <Content activeTab={this.state.activeTab}>
                 {sceneWithProps}

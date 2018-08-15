@@ -3,6 +3,8 @@ export const buyerLoginEndPoint = 'user/auth/buyer';
 export const getSellerProjects = 'project';
 export const getBidsProjects = 'bid/project';
 export const postProjects = 'project/post';
+export const getAllPostedProjectsBeforeBidEndTime = 'project/all/beforebidendtime';
+export const postBid = 'bid/add';
 
 
 const envConfigMap = {
