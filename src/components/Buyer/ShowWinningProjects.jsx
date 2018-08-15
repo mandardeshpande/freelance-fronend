@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment'
 
 
 const ShowWinningProjects = ({winningProjects})=>{
@@ -17,7 +18,7 @@ const ShowWinningProjects = ({winningProjects})=>{
                     <th scope="row">{idx + 1}</th>
                     <td>{project.projectTitle}</td>
                     <td>{project.projectSellerFirstName}</td>
-                    <td>{project.projectDeliveryDate}</td>
+                    <td><Moment>{project.projectDeliveryDate}</Moment></td>
                 </tr>);
             })}
             </tbody>

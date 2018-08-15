@@ -1,7 +1,7 @@
 import React from 'react';
+import Moment from 'react-moment';
 
-
-const ShowBids = ({bids})=>{
+const ShowBids = ({bids}) => {
     return (
         <table className="table">
             <thead className="thead-dark">
@@ -13,11 +13,11 @@ const ShowBids = ({bids})=>{
             </tr>
             </thead>
             <tbody>
-            { bids.map((bid,idx)=>{
-                return(<tr key={idx}>
+            {bids.map((bid, idx) => {
+                return (<tr key={idx}>
                     <th scope="row">{idx + 1}</th>
                     <td>{bid.projectTitle}</td>
-                    <td>{bid.bidTime}</td>
+                    <td><Moment>{bid.bidTime}</Moment></td>
                     <td>{bid.bidAmount}</td>
                 </tr>);
             })}
