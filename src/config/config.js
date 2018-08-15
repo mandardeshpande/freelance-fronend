@@ -1,6 +1,10 @@
 export const sellerLoginEndPoint = 'user/seller/auth';
 export const buyerLoginEndPoint = 'user/buyer/auth';
 export const getSellerProjects = 'project';
+export const getBidsProjects = 'bid/project';
+
+export const postProjects = 'project/post';
+
 
 
 

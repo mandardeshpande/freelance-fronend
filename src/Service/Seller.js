@@ -1,8 +1,20 @@
 import axios from 'axios';
-import { getSellerProjects } from '../config/config'
+import { getSellerProjects, getBidsProjects, postProjects } from '../config/config'
 
-const getAllProjectsPostedBySeller = ()=>{
-    return axios.get(`http://localhost:8080/${getSellerProjects}/1`)
+const getAllProjectsPostedBySeller = (userId)=>{
+    return axios.get(`http://localhost:8080/${getSellerProjects}/${userId}`);
 };
 
-export default getAllProjectsPostedBySeller;
+const getAllBidForProjectBySeller = (userId)=>{
+    return axios.get(`http://localhost:8080/${getBidsProjects}/${userId}`);
+};
+
+const postProjectBySeller = (userId, payload)=>{
+    return axios.post(`http://localhost:8080/${postProjects}/${userId}`,payload);
+};
+
+export{
+    getAllProjectsPostedBySeller,
+    getAllBidForProjectBySeller,
+    postProjectBySeller
+};

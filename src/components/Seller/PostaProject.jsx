@@ -1,5 +1,6 @@
 import React from 'react';
-import FormErrors from '../genericComponents/FormErrors'
+import FormErrors from '../genericComponents/FormErrors';
+import {postProjectBySeller} from '../../Service/Seller'
 
 export default class PostaProject extends React.Component {
 
@@ -27,8 +28,27 @@ export default class PostaProject extends React.Component {
     }
 
     handleSubmit(){
-
         this.validateForm();
+
+        if(this.state.formErrors.length > 0){
+            return;
+        }
+
+        const userId = localStorage.getItem("UserId");
+        const payLoad ={
+            title:this.state.title,
+            description:this.state.description,
+            biddingStartTime:this.state.bidStartTime,
+            biddingEndTime:this.state.bidEndTime,
+            projectDeliveryDate: this.state.projectDeliveryDate
+
+        };
+        postProjectBySeller(userId, payLoad).then((response)=>{
+            console.log(response.data);
+        }).catch((err)=>{
+            console.error(err);
+        });
+
     }
 
     validateForm() {
@@ -50,8 +70,6 @@ export default class PostaProject extends React.Component {
             fieldsWithErrors.push('bidStartTime');
             fieldsWithErrors.push('projectDeliveryDate');
         }
-
-        debugger;
 
         this.setState({formErrors:fieldsWithErrors});
 
