@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { placeBid} from '../../Service/BidService'
 
 const display = {
     display: 'block'
@@ -17,6 +17,7 @@ export default class PlaceBidModal extends React.Component {
         };
 
         this.handleBidAmountChange = this.handleBidAmountChange.bind(this);
+        this.handleSubmissionOfBid = this.handleSubmissionOfBid.bind(this);
     }
 
     handleBidAmountChange(e){
@@ -29,6 +30,21 @@ export default class PlaceBidModal extends React.Component {
         this.setState((prevState) => ({
             toggle: !prevState.toggle
         }));
+    }
+
+    handleSubmissionOfBid(){
+        const payloadForPlaceBid = {
+            biddingUser:localStorage.getItem('UserId'),
+            projectId:this.props.projectId,
+            bidAmount:this.state.bidAmount
+        }
+        placeBid(payloadForPlaceBid).then((response)=>{
+            console.log(response.data);
+            this.setState({success:true});
+            this.toggle();
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
     render() {
         var modal = [];
@@ -46,7 +62,7 @@ export default class PlaceBidModal extends React.Component {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.toggle}>Close</button>
-                        <button type="button" className="btn btn-primary" onClick={this.toggle}>Place</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleSubmissionOfBid}>Place</button>
                     </div>
                 </div>
             </div>

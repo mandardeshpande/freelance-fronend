@@ -3,9 +3,9 @@ import Project from "./Project";
 import Tabs from '../genericComponents/Tabs';
 import Content from '../genericComponents/Content';
 import ShowBids from "../Bid/ShowBids";
-import { winningBids }from '../fixtures/winningBids'
-import { bids }from '../fixtures/bids_user'
 import {getAllProjectPosted} from "../../Service/BuyerService";
+import { getAllBids, getAllWinningBidsForUser } from '../../Service/BidService'
+import ShowWinningProjects from "./ShowWinningProjects";
 
 
 export default class BuyerDashBoard extends React.Component{
@@ -18,7 +18,7 @@ export default class BuyerDashBoard extends React.Component{
         this.tabData =  [
             { name: 'Home', isActive: true , scene:<Project />, sceneData:null},
             { name: 'Bids', isActive: false, scene:<ShowBids />, sceneData:null},
-            { name: 'Bids Won', isActive: false, scene:<ShowBids />, sceneData:null}
+            { name: 'Bids Won', isActive: false, scene:<ShowWinningProjects />, sceneData:null}
         ];
 
         this.state = {
@@ -29,11 +29,29 @@ export default class BuyerDashBoard extends React.Component{
 
     componentDidMount(){
 
-        getAllProjectPosted().then((response)=>{
-            this.setState({postedProject:response.data,bids,winningBids,isLoading:false})
+        const userId = localStorage.getItem('UserId');
+
+        const getProjectPromise = getAllProjectPosted().then((response)=>{
+            return Promise.resolve({projectsResponse:response.data});
+        }).catch((err)=>{
+            console.error(err);
+        });
+
+        const getAllBidsPromise =  getAllBids(userId).then((response)=>{
+            return Promise.resolve({bids:response.data});
+        });
+
+        const getAllWinningBidsForUserPromise =  getAllWinningBidsForUser(userId).then((response)=>{
+            return Promise.resolve({winningBids:response.data});
+        });
+
+        Promise.all([getAllBidsPromise,getProjectPromise, getAllWinningBidsForUserPromise]).then(([bidsResponse,projectResponse,allWinningBidsForUserResponse])=>{
+            console.log(projectResponse, bidsResponse, allWinningBidsForUserResponse);
+            this.setState({postedProject:projectResponse.projectsResponse,bids:bidsResponse.bids,winningBids:allWinningBidsForUserResponse.winningBids,isLoading:false});
         }).catch((err)=>{
             console.error(err);
         })
+
     }
 
     handleClick(tab) {
@@ -54,7 +72,7 @@ export default class BuyerDashBoard extends React.Component{
         }
 
         if(scene.name === 'Bids Won'){
-            sceneWithProps = <ShowBids bids={this.state.winningBids}/>
+            sceneWithProps = <ShowWinningProjects winningProjects={this.state.winningBids}/>
         }
 
 

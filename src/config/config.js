@@ -5,7 +5,8 @@ export const getBidsProjects = 'bid/project';
 export const postProjects = 'project/post';
 export const getAllPostedProjectsBeforeBidEndTime = 'project/all/beforebidendtime';
 export const postBid = 'bid/add';
-
+export const getBidProjectsForBuyer = 'bid/project/buyer';
+export const getWinningBidForBuyer='bid/winning';
 
 const envConfigMap = {
     local:{

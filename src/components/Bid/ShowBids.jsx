@@ -8,7 +8,6 @@ const ShowBids = ({bids})=>{
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Project Title</th>
-                <th scope="col">Bidder FirstName</th>
                 <th scope="col">Bid Time</th>
                 <th scope="col">Bid Amount</th>
             </tr>
@@ -18,7 +17,6 @@ const ShowBids = ({bids})=>{
                 return(<tr key={idx}>
                     <th scope="row">{idx + 1}</th>
                     <td>{bid.projectTitle}</td>
-                    <td>{bid.bidderFirstName}</td>
                     <td>{bid.bidTime}</td>
                     <td>{bid.bidAmount}</td>
                 </tr>);
