@@ -25,7 +25,6 @@ export default class Login extends React.Component{
     }
 
     handleOnClickOfSubmit(event) {
-        console.log(this.state);
         event.preventDefault();
         this.props.handleLogin(this.state);
     }

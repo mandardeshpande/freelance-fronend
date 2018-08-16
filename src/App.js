@@ -3,8 +3,7 @@ import Login from './components/Login'
 import './styles/App.css';
 import BuyerDashBoard from "./components/Buyer/BuyerDashBoard";
 import SellerDashBoard from "./components/Seller/SellerDashBoard";
-import getEnvConfig from './config/config';
-import { authBuyer, authSeller} from "./Service/AuthService";
+import {authBuyer, authSeller} from "./Service/AuthService";
 
 class App extends Component {
 
@@ -13,41 +12,41 @@ class App extends Component {
 
         this.state = {
             loginSuccess: false,
-            showLogin:true,
-            type:''
+            showLogin: true,
+            type: '',
+            isLoading:true
+
         };
 
         this.handleLogin = this.handleLogin.bind(this);
     }
 
-
-    componentDidMount(){
-        const host = getEnvConfig('local').host;
-        localStorage.setItem('host',host);
+    componentDidMount() {
+        this.setState({isLoading:false});
     }
 
     handleLogin(data) {
-        localStorage.setItem("type",data.type);
-        if(data.type === 'buyer'){
-            authBuyer(data.email, data.password).then((response)=>{
+        localStorage.setItem("type", data.type);
+        if (data.type === 'buyer') {
+            authBuyer(data.email, data.password).then((response) => {
                 this.setState({
                     loginSuccess: true,
-                    showLogin:false,
-                    type:data.type
+                    showLogin: false,
+                    type: data.type
                 });
-                localStorage.setItem("UserId",response.data.userId);
-            }).catch((err)=>{
+                localStorage.setItem("UserId", response.data.userId);
+            }).catch((err) => {
                 console.error(err);
             })
-        } else if( data.type === 'seller'){
-            authSeller(data.email, data.password).then((response)=>{
+        } else if (data.type === 'seller') {
+            authSeller(data.email, data.password).then((response) => {
                 this.setState({
                     loginSuccess: true,
-                    showLogin:false,
-                    type:data.type
+                    showLogin: false,
+                    type: data.type
                 });
-                localStorage.setItem("UserId",response.data.userId);
-            }).catch((err)=>{
+                localStorage.setItem("UserId", response.data.userId);
+            }).catch((err) => {
                 console.error(err);
             })
         }
@@ -55,8 +54,9 @@ class App extends Component {
 
     render() {
         let dashBoard = null;
-        if(this.state.loginSuccess){
-            dashBoard = (this.state.type === 'buyer')?<div className="card"><BuyerDashBoard/></div>:<div className="card"><SellerDashBoard/></div>;
+        if (this.state.loginSuccess && !this.state.isLoading) {
+            dashBoard = (this.state.type === 'buyer') ? <div className="card"><BuyerDashBoard/></div> :
+                <div className="card"><SellerDashBoard/></div>;
         }
 
         return (

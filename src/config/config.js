@@ -18,14 +18,14 @@ const envConfigMap = {
         postProjects
     },
     prod:{
-        host:'yettocome.com',
+        host:'https://boiling-spire-43934.herokuapp.com',
         sellerLoginEndPoint,
         buyerLoginEndPoint,
         getSellerProjects,
         getBidsProjects,
         postProjects
     }
-}
+};
 
 
 const getEnvConfig = env => envConfigMap[env];

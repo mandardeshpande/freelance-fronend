@@ -1,16 +1,23 @@
 import axios from 'axios';
-import { getSellerProjects, getBidsProjects, postProjects } from '../config/config'
+import { getSellerProjects, getBidsProjects, postProjects } from '../config/config';
+import getEnvConfig from '../config/config';
+import getEnvironmentFromUrl from "../utils/getEnvironmentFromUrl";
+
+
+const env = getEnvironmentFromUrl();
+const host = getEnvConfig(env).host;
 
 const getAllProjectsPostedBySeller = (userId)=>{
-    return axios.get(`http://localhost:8080/${getSellerProjects}/${userId}`);
+
+    return axios.get(`${host}/${getSellerProjects}/${userId}`);
 };
 
 const getAllBidForProjectBySeller = (userId)=>{
-    return axios.get(`http://localhost:8080/${getBidsProjects}/${userId}`);
+    return axios.get(`${host}/${getBidsProjects}/${userId}`);
 };
 
 const postProjectBySeller = (userId, payload)=>{
-    return axios.post(`http://localhost:8080/${postProjects}/${userId}`,payload);
+    return axios.post(`${host}/${postProjects}/${userId}`,payload);
 };
 
 export{
