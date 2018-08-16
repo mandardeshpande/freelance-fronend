@@ -18,7 +18,7 @@ const envConfigMap = {
         postProjects
     },
     prod:{
-        host:'https://boiling-spire-43934.herokuapp.com',
+        host:'https://marketplace-selfemployed.herokuapp.com',
         sellerLoginEndPoint,
         buyerLoginEndPoint,
         getSellerProjects,
