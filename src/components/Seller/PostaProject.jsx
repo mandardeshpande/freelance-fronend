@@ -45,8 +45,10 @@ export default class PostaProject extends React.Component {
         };
         postProjectBySeller(userId, payLoad).then((response)=>{
             console.log(response.data);
+            this.setState({isPostingProjectSuccess:true})
         }).catch((err)=>{
             console.error(err);
+            this.setState({isPostingProjectSuccess:false})
         });
 
     }
@@ -76,8 +78,12 @@ export default class PostaProject extends React.Component {
     }
 
     render() {
+        const classNameForAlert = (this.state.isPostingProjectSuccess)?"alert alert-success":"alert alert-danger";
+        const textForAlert = (this.state.isPostingProjectSuccess)?"Success!":"Something is not right";
+
         return (
             <form>
+                {this.state.isPostingProjectSuccess && <div className={classNameForAlert}>{textForAlert} </div>}
                 <div>
                     {<FormErrors formErrors={this.state.formErrors}/>}
                 </div>

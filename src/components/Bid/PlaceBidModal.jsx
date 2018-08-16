@@ -38,16 +38,18 @@ export default class PlaceBidModal extends React.Component {
             projectId:this.props.projectId,
             bidAmount:this.state.bidAmount
         }
-        placeBid(payloadForPlaceBid).then((response)=>{
-            console.log(response.data);
-            this.setState({success:true});
+        placeBid(payloadForPlaceBid).then(()=>{
+            this.setState({isPlaceBidSuccess:true});
             this.toggle();
         }).catch((err)=>{
             console.log(err);
+            this.setState({isPlaceBidSuccess:false});
         })
     }
     render() {
         var modal = [];
+        const classNameForAlert = (this.state.isPlaceBidSuccess)?"alert alert-success":"alert alert-danger";
+        const textForAlert = (this.state.isPlaceBidSuccess)?"Success!":"Something is not right";
         modal.push(
             <div key={this.props.projectId} className="modal-body" style={this.state.toggle ? display : hide}>
                 <div className="modal-content">
@@ -71,6 +73,7 @@ export default class PlaceBidModal extends React.Component {
             <div>
                 {modal}
                 {!this.state.toggle?<button type="button" onClick={this.toggle} className="btn btn-primary">Place Bid</button>:null}
+                {this.state.isPlaceBidSuccess && <div className={classNameForAlert}>{textForAlert} </div>}
             </div>
         );
     }

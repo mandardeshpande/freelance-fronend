@@ -5,7 +5,6 @@ import Content from '../genericComponents/Content';
 import ShowBids from "../Bid/ShowBids";
 import {getAllProjectPosted} from "../../Service/BuyerService";
 import { getAllBids, getAllWinningBidsForUser } from '../../Service/BidService'
-import ShowWinningProjects from "./ShowWinningProjects";
 
 
 export default class BuyerDashBoard extends React.Component{
@@ -18,7 +17,7 @@ export default class BuyerDashBoard extends React.Component{
         this.tabData =  [
             { name: 'Home', isActive: true , scene:<Project />, sceneData:null},
             { name: 'Bids', isActive: false, scene:<ShowBids />, sceneData:null},
-            { name: 'Bids Won', isActive: false, scene:<ShowWinningProjects />, sceneData:null}
+            { name: 'Bids Won', isActive: false, scene:<ShowBids />, sceneData:null}
         ];
 
         this.state = {
@@ -46,11 +45,10 @@ export default class BuyerDashBoard extends React.Component{
         });
 
         Promise.all([getAllBidsPromise,getProjectPromise, getAllWinningBidsForUserPromise]).then(([bidsResponse,projectResponse,allWinningBidsForUserResponse])=>{
-            console.log(projectResponse, bidsResponse, allWinningBidsForUserResponse);
             this.setState({postedProject:projectResponse.projectsResponse,bids:bidsResponse.bids,winningBids:allWinningBidsForUserResponse.winningBids,isLoading:false});
         }).catch((err)=>{
             console.error(err);
-        })
+        });
 
     }
 
@@ -72,7 +70,7 @@ export default class BuyerDashBoard extends React.Component{
         }
 
         if(scene.name === 'Bids Won'){
-            sceneWithProps = <ShowWinningProjects winningProjects={this.state.winningBids}/>
+            sceneWithProps = <ShowBids bids={this.state.winningBids}/>
         }
 
 
