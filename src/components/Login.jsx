@@ -29,7 +29,6 @@ export default class Login extends React.Component{
         event.preventDefault();
         this.setState({isSignInProgress:true});
         this.props.handleLogin(this.state);
-        this.setState({isSignInProgress:false});
     }
 
     render() {
