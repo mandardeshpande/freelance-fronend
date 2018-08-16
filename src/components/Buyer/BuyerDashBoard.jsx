@@ -27,7 +27,10 @@ export default class BuyerDashBoard extends React.Component{
     }
 
     componentDidMount(){
+        this.dashBoardLoader();
+    }
 
+    dashBoardLoader(){
         const userId = localStorage.getItem('UserId');
 
         const getProjectPromise = getAllProjectPosted().then((response)=>{
@@ -49,7 +52,6 @@ export default class BuyerDashBoard extends React.Component{
         }).catch((err)=>{
             console.error(err);
         });
-
     }
 
     handleClick(tab) {

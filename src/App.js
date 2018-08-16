@@ -56,13 +56,13 @@ class App extends Component {
     render() {
         let dashBoard = null;
         if(this.state.loginSuccess){
-            dashBoard = (this.state.type === 'buyer')?<BuyerDashBoard/>:<SellerDashBoard/>;
+            dashBoard = (this.state.type === 'buyer')?<div className="card"><BuyerDashBoard/></div>:<div className="card"><SellerDashBoard/></div>;
         }
 
         return (
             <div className="App">
                 <Login showLogin={this.state.showLogin} handleLogin={this.handleLogin}/>
-                <div className="card">{dashBoard}</div>
+                {dashBoard}
             </div>
         );
     }

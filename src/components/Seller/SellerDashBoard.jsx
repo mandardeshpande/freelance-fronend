@@ -29,11 +29,14 @@ export default class SellerDashBoard extends React.Component {
     }
 
     componentDidMount() {
+        this.dashBoardLoader();
+    }
+
+    dashBoardLoader(){
         const userId = localStorage.getItem("UserId");
         getAllBidForProjectBySeller(userId).then(response=>{
             this.setState({bids:response.data, isLoading: false});
-        })
-
+        });
     }
 
 
