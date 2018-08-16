@@ -14,7 +14,8 @@ class App extends Component {
             loginSuccess: false,
             showLogin: true,
             type: '',
-            isLoading:true
+            isLoading:true,
+            isSignInProgress:true
 
         };
 
@@ -32,9 +33,10 @@ class App extends Component {
                 this.setState({
                     loginSuccess: true,
                     showLogin: false,
-                    type: data.type
+                    type: data.type,
+                    isSignInProgress:false,
+                    userId:response.data.userId
                 });
-                localStorage.setItem("UserId", response.data.userId);
             }).catch((err) => {
                 console.error(err);
             })
@@ -43,11 +45,13 @@ class App extends Component {
                 this.setState({
                     loginSuccess: true,
                     showLogin: false,
-                    type: data.type
+                    type: data.type,
+                    isSignInProgress:false,
+                    userId:response.data.userId
                 });
-                localStorage.setItem("UserId", response.data.userId);
             }).catch((err) => {
                 console.error(err);
+                this.setState({isSignInProgress:false})
             })
         }
     }
@@ -55,12 +59,12 @@ class App extends Component {
     render() {
         let dashBoard = null;
         if (this.state.loginSuccess && !this.state.isLoading) {
-            dashBoard = (this.state.type === 'buyer') ? <div className="card"><BuyerDashBoard/></div> :
-                <div className="card"><SellerDashBoard/></div>;
+            dashBoard = (this.state.type === 'buyer') ? <div className="card"><BuyerDashBoard/></div> : <div className="card"><SellerDashBoard/></div>;
         }
 
         return (
             <div className="App">
+                {(!this.state.isSignInProgress && !this.state.isLoading && !this.state.loginSuccess) ? <div className="alert alert-danger col mx-auto">SignIn Failed</div> : null }
                 <Login showLogin={this.state.showLogin} handleLogin={this.handleLogin}/>
                 {dashBoard}
             </div>
