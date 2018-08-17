@@ -27,7 +27,6 @@ class App extends Component {
     }
 
     handleLogin(data) {
-        localStorage.clear();
         localStorage.setItem("type", data.type);
         if (data.type === 'buyer') {
             authBuyer(data.email, data.password).then((response) => {
@@ -36,7 +35,8 @@ class App extends Component {
                     showLogin: false,
                     type: data.type,
                     isSignInProgress:false,
-                    userId:response.data.userId
+                    userId:response.data.userId,
+                    isLoading:false
                 });
                 localStorage.setItem("UserId", response.data.userId);
             }).catch((err) => {
@@ -49,7 +49,8 @@ class App extends Component {
                     showLogin: false,
                     type: data.type,
                     isSignInProgress:false,
-                    userId:response.data.userId
+                    userId:response.data.userId,
+                    isLoading:false
                 });
                 localStorage.setItem("UserId", response.data.userId);
             }).catch((err) => {
