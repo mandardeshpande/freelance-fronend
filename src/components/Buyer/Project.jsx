@@ -8,9 +8,8 @@ const Project = ({projects}) => {
         return <div> No Projects to bid</div>
     }
 
-    return projects.map((project, idx) => {
-        return (<div key={idx} className="row">
-            <div className="col-sm-4">
+    const project = projects.map((project, idx) => {
+        return (<div className="col-sm-4">
                 <div className="card">
                     <div className="card-body">
                         <h5 className="card-title">{project.title}</h5>
@@ -18,9 +17,12 @@ const Project = ({projects}) => {
                         <PlaceBidModal projectId={project.id}/>
                     </div>
                 </div>
-            </div>
-        </div>)
+            </div>)
     });
+
+    return (<div className="row">
+        {project}
+    </div>);
 };
 
 export default Project;
