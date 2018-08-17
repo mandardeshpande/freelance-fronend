@@ -27,6 +27,7 @@ class App extends Component {
     }
 
     handleLogin(data) {
+        localStorage.clear();
         localStorage.setItem("type", data.type);
         if (data.type === 'buyer') {
             authBuyer(data.email, data.password).then((response) => {
@@ -37,6 +38,7 @@ class App extends Component {
                     isSignInProgress:false,
                     userId:response.data.userId
                 });
+                localStorage.setItem("UserId", response.userId);
             }).catch((err) => {
                 console.error(err);
             })
@@ -49,6 +51,7 @@ class App extends Component {
                     isSignInProgress:false,
                     userId:response.data.userId
                 });
+                localStorage.setItem("UserId", response.userId);
             }).catch((err) => {
                 console.error(err);
                 this.setState({isSignInProgress:false})
