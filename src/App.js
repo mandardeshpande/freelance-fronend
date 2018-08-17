@@ -38,7 +38,7 @@ class App extends Component {
                     isSignInProgress:false,
                     userId:response.data.userId
                 });
-                localStorage.setItem("UserId", response.userId);
+                localStorage.setItem("UserId", response.data.userId);
             }).catch((err) => {
                 console.error(err);
             })
@@ -51,7 +51,7 @@ class App extends Component {
                     isSignInProgress:false,
                     userId:response.data.userId
                 });
-                localStorage.setItem("UserId", response.userId);
+                localStorage.setItem("UserId", response.data.userId);
             }).catch((err) => {
                 console.error(err);
                 this.setState({isSignInProgress:false})
