@@ -28,9 +28,9 @@ export default class PostaProject extends React.Component {
     }
 
     handleSubmit(){
-        this.validateForm();
 
-        if(this.state.formErrors.length > 0){
+
+        if(this.validateForm()){
             return;
         }
 
@@ -74,6 +74,8 @@ export default class PostaProject extends React.Component {
         }
 
         this.setState({formErrors:fieldsWithErrors});
+
+        return fieldsWithErrors.length > 0;
 
     }
 
