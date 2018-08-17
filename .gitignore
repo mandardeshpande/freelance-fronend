@@ -38,6 +38,7 @@ jspm_packages/
 build/
 .idea/workspace.xml
 .idea/vcs.xml
+.idea
 
 # TypeScript v1 declaration files
 typings/
